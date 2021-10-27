@@ -1,1 +1,1 @@
-# amogus 😎
+amogus 😎
