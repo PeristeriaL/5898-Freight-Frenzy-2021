@@ -1,3 +1,12 @@
+
+
+
+// this is the first auto i made and it just uses power. autobluecenter / autoredcenter (not blueautocenter or redautocenter) is a better version
+// that uses encoders not power
+
+
+
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
@@ -56,13 +65,13 @@ import com.qualcomm.robotcore.hardware.Servo;
  * Use Android Studios to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
-
-//tells driver hub what to name the thing on the screen. it also tell it that its op mode instead of auto.
+ 
+ //tells driver hub what to name the thing on the screen. it also tell it that its op mode instead of auto.
 @Autonomous(name="auto blue center", group="Linear Opmode")
 
 
 // makes a class to run ur swag code
-public class AutoBlueCenter extends LinearOpMode {
+public class BlueAutoCenter extends LinearOpMode {
 
     // Declare OpMode members. this just creates 'objects' for you to do stuff with
     private ElapsedTime runtime = new ElapsedTime();
@@ -113,44 +122,41 @@ public class AutoBlueCenter extends LinearOpMode {
 
         // run until the end of the match (driver presses STOP)
 
-        //wait 10 milliseconds so our alliance can do their thing
-        sleep(10000);
-
         //go forward to the goal
         forwardamt(.43);
         sleep(950);
         stopRobot();
-
+        
         //outtake block like cubes in minecraft
         sleep(500);
         in.setPower(-1.0);
         sleep(3000);
-
+        
         //stop the intake
         in.setPower(0.0);
         sleep(500);
-
+        
         //back up slightly to not hit the goal
         backamt(.25);
         sleep(700);
         stopRobot();
-
+        
         //turn right to go into the warehouse
         turnleftamt(.4);
         sleep(1230);
         stopRobot();
-
-        //go into warehouse
+        
+        //go into warehouse    
         forwardamt(.8);
         sleep(1800);
-
+        
         stopRobot();
 
         // Setup a variable for each drive wheel to save power level for telemetry
 
     }
-
-
+    
+    
 
     public void backamt(double amt)
     {
@@ -159,7 +165,7 @@ public class AutoBlueCenter extends LinearOpMode {
         rb.setPower(-amt);
         rf.setPower(-amt);
     }
-
+    
     public void forwardamt(double amt)
     {
         lf.setPower(amt);
@@ -167,7 +173,7 @@ public class AutoBlueCenter extends LinearOpMode {
         rb.setPower(amt);
         rf.setPower(amt);
     }
-
+    
     public void turnleftamt(double amt)
     {
         lf.setPower(-amt);
@@ -175,7 +181,7 @@ public class AutoBlueCenter extends LinearOpMode {
         rb.setPower(amt);
         rf.setPower(amt);
     }
-
+    
     public void turnrightamt(double amt)
     {
         lf.setPower(amt);
@@ -183,7 +189,7 @@ public class AutoBlueCenter extends LinearOpMode {
         rb.setPower(-amt);
         rf.setPower(-amt);
     }
-
+    
     public void stopRobot()
     {
         lf.setPower(0);
@@ -192,6 +198,6 @@ public class AutoBlueCenter extends LinearOpMode {
         rf.setPower(0);
         sleep(500);
     }
-
+    
 
 }
