@@ -208,6 +208,7 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
     }
 
     ///////// camera init methods //////////////////////////////////////////////////
+    //personally, i did not touch / make these guys except to choose the camera i use
 
     private void initVuforia() {
         /*
@@ -217,7 +218,7 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
         VuforiaLocalizer.Parameters parameters = new VuforiaLocalizer.Parameters();
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
-        parameters.cameraName = hardwareMap.get(WebcamName.class, "DuckScope");
+        parameters.cameraName = hardwareMap.get(WebcamName.class, "DuckScope");//you change the "DuckScope" to whatever ur camera name is
 
         // Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -238,17 +239,33 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
     ////////////////////////////////////////////////////////////////////////////////
     ////// movement methods ////////////////////////////////////////////////////////
 
-    public void up(int amt, double power) {
-        screw.setTargetPosition(screw.getCurrentPosition() + amt);
-        screw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    /*these are methods that I made. void means it doesnt return anything. FTC rarely uses anything
+    that returns stuff, so dont sweat that. im sure yall will get farther than i did sinec you
+    will have had 2 years of experince your senior year rather than just 1 like me. you might return
+    stuff but i did not
+     */
 
-        while (opModeIsActive() && screw.isBusy()) {
+    //so my encoder methods take in a crap ton less values than garvs/james'. idk why they take in so many
+    //but its probably more precise or something. this worked for me but i highly recommend looking
+    //at lots of people code and reading the ftc github if you ever need help. (also mentors because connect award)
+
+    public void up(int amt, double power) {
+        screw.setTargetPosition(screw.getCurrentPosition() + amt); //to use encoders you must 1. set target position
+        screw.setMode(DcMotor.RunMode.RUN_TO_POSITION);                                     //2. set RUN_TO_POSITION
+                                                                                            //3. set the power while busy
+                                                                                            //4. stop the power when finished
+                                                                                            //5. set back to RUN_USING_ENCODER
+
+        while (opModeIsActive() && screw.isBusy()) { //this checks to make sure screw hasnt reached its destination yet
             screw.setPower(power);
         }
 
         screw.setPower(0);
         screw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
+
+
+    //honestly this probably isnt the right way to do this but it works soo yeah. if you have questions id ask william but i can also try
 
     public void rotate(int amt, double power) {
         rotate.setTargetPosition(rotate.getCurrentPosition() + amt);
@@ -262,23 +279,6 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
         rotate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    public void rotateUp(int amt, double power, int upAmt, double upPower) {
-        rotate.setTargetPosition(rotate.getCurrentPosition() + amt);
-        screw.setTargetPosition(screw.getCurrentPosition() + upAmt);
-
-        rotate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        screw.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-        while (opModeIsActive() && rotate.isBusy() && screw.isBusy()) {
-            rotate.setPower(power);
-            screw.setPower(upPower);
-        }
-
-        rotate.setPower(0);
-        screw.setPower(0);
-        rotate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        screw.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-    }
 
     public void forwardAmt(int amt, double power) {
         rf.setTargetPosition(rf.getCurrentPosition() + amt);
@@ -470,6 +470,8 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
         lb.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
+    //the following functions are why Java is great -> you can do them all in one line and its awesome
+
     // stop all movement
     public void stopRobot() {rf.setPower(0); lf.setPower(0); rb.setPower(0);
         lb.setPower(0); screw.setPower(0); }
@@ -478,22 +480,10 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
     public void allPower(double power) {rf.setPower(power); rb.setPower(power);
         lf.setPower(power); lb.setPower(power); }
 
+    //intake/outtake
     public void outtake() { in.setPower(1.0); sleep(2500); in.setPower(0.0);}
     public void intake(){ in.setPower(-1.0); sleep(2500); in.setPower(0.0); }
 
-    public void warehouse() {
-        // back up slightly to not hit the goal
-        backAmt(400, .5);
-        sleep(700);
-        stopRobot();
-
-        // turn right to go into the warehouse
-        rightAmt(-1000, .4);
-        stopRobot();
-
-        // go into warehouse
-        forwardAmt(2500, .9);
-    }
 
     public void approachGoal() {
         angleTurnRight(1600, .5);
