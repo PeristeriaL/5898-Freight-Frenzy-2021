@@ -490,7 +490,9 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
         forwardAmt(350,.1);
     }
 
-    // find out the randomizations so that the duck code goes to the right level
+
+    //so here is where i made the methods to use on randomization. i felt like it was better
+    //to make it here than up where the methods are used because then i wouldnt mess anything up
 
     public void lowest() {
         angleTurnRight(1600, .5);
@@ -504,7 +506,7 @@ public class Commented extends LinearOpMode {  //you MUST have the "Commented" m
     }
 
     public void mid() {
-        angleTurnRightHigh(1600, .5, .7);
+        angleTurnRightHigh(1600, .5, .7); // so this goes up while going forward
         forwardAmt(220,.4);
         rotate(400,.3);
         outtake();
