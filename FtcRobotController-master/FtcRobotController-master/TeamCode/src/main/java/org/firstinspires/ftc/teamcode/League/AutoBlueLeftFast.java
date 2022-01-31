@@ -215,7 +215,7 @@ public class AutoBlueLeftFast extends LinearOpMode {
     TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
     tfodParameters.minResultConfidence = 0.8f;
     tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-    tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABELS);
+    tfod.loadModelFromFile(TFOD_MODEL_ASSET, LABELS);
   }
 
   ////////////////////////////////////////////////////////////////////////////////
